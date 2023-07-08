@@ -11,19 +11,27 @@ const getUsers = (request, response) => {
 
 const getUserById = (request, response) => {
     const id = parseInt(request.params.id);
-    console.log(`Id is set to: ${id}`);
+    console.log(`1`);
+
+    let timeoutHandler = setTimeout(() => {
+        console.log('Query taking too long, timeout');
+        response.status(500).json({ error: 'Query taking too long, timeout.' });
+    }, 5000); // adjust timeout as needed
 
     db.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+        clearTimeout(timeoutHandler); // remove the timeout handler
         if (error) {
             console.log('2');
+            response.status(500).json({ error: 'Database query error.' });
             throw error;
         }
         response.status(200).json(results.rows);
         console.log('3');
     });
 
-    console.log('End of request');
+    console.log('4');
 };
+
 
 const createUser = (request, response) => {
     const { username, email, password_hash, first_name, last_name, address } = request.body
@@ -37,8 +45,34 @@ const createUser = (request, response) => {
         })
 };
 
+const updateUser = (request, response) => {
+    const id = parseInt(request.params.id);
+    const { username, email, password_hash, first_name, last_name, address } = request.body
+
+    db.query('UPDATE users SET username = $1, email = $2, password_hash = $3, first_name = $4, last_name = $5, address = $6) WHERE id = $7',
+        [username, email, password_hash, first_name, last_name, address, id], (error, results) => {
+            if (error) {
+                throw error
+            }
+            response.status(201).send(`User added with ID: ${results.rows[0].id}`)
+        })
+};
+
+const deleteUser = (request, response) => {
+    const id = parseInt(request.params.id);
+
+    db.query('DELETE FROM users WEHERE id = $1', [id], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.status(200).send(`Success. User deleted with id: ${id}`);
+    })
+};
+
 module.exports = {
     getUsers,
     getUserById,
     createUser,
+    updateUser,
+    deleteUser,
 };
