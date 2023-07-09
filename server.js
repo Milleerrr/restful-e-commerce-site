@@ -33,4 +33,11 @@ server.post('/users', Users.createUser);
 server.put('/users/:id', Users.updateUser);
 server.delete('/users/:id', Users.deleteUser);
 
+/*
+ * Carts routes
+*/
+server.get('/carts/:id', Carts.getCartById);
+server.post('/carts/:id', Carts.createCartById);
+server.post('/carts', Carts.createCart);
+
 server.listen(PORT, () => { console.log(`Server listening on Port ${PORT}`) });

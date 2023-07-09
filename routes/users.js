@@ -11,7 +11,6 @@ const getUsers = (request, response) => {
 
 const getUserById = (request, response) => {
     const id = parseInt(request.params.id);
-    console.log(`1`);
 
     let timeoutHandler = setTimeout(() => {
         console.log('Query taking too long, timeout');
@@ -21,15 +20,11 @@ const getUserById = (request, response) => {
     db.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
         clearTimeout(timeoutHandler); // remove the timeout handler
         if (error) {
-            console.log('2');
             response.status(500).json({ error: 'Database query error.' });
             throw error;
         }
         response.status(200).json(results.rows);
-        console.log('3');
     });
-
-    console.log('4');
 };
 
 
