@@ -29,9 +29,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 */
 server.get('/users', Users.getUsers);
 server.get('/users/:id', Users.getUserById);
-// server.post('/users', Users.createUser);
-// server.put('/users/:id', Users.updateUser);
-// server.delete('/users/:id', Users.deleteUser);
+server.post('/users', Users.createUser);
+server.put('/users/:id', Users.updateUser);
+server.delete('/users/:id', Users.deleteUser);
 
 /*
  * Carts routes
