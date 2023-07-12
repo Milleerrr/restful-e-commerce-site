@@ -1,23 +1,14 @@
 const db = require('../db');
 
-const getCartById = (request, response) => {
-    const id = parseInt(request.params.id);
-
-    let timeoutHandler = setTimeout(() => {
-        console.log('Query taking too long, timeout');
-        response.status(500).json({ error: 'Query taking too long, timeout.' });
-    }, 5000); // adjust timeout as needed
-
-    db.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-        clearTimeout(timeoutHandler); // remove the timeout handler
-        if (error) {
-            response.status(500).json({ error: 'Database query error.' });
-            throw error;
-        }
-        response.status(200).json(results.rows);
-    });
+const getCartById = async (request, response) => {
+    try {
+        const id = parseInt(request.params.id);
+        const results = await db.query('SELECT * FROM carts WHERE id = $1', [id]);
+        return response.status(200).json(results.rows);
+    } catch (error) {
+        return response.status(500).json({ error: 'Database query error.' });
+    }
 };
-
 
 const createCart = (request, response) => {
     const { id, user_id } = request.body
