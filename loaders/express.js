@@ -9,12 +9,10 @@ module.exports = (app) => {
     app.use(cors());
 
     // Transfrom req.body data into JSON format
-    app.user(bodyParser.json());
+    app.use(bodyParser.json());
 
     // Prases urlencoded bodies
     app.use(bodyParser.urlencoded({ extended: true }));
-
-    app.use('trust proxy', 1);
 
     // Create a session
     app.use(

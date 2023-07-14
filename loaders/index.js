@@ -10,7 +10,7 @@ module.exports = async (app) => {
 
   // Load Passport middleware
   const passport = await passportLoader(expressApp);
-
+  console.log(passport);
   // Load API route handlers
   await routeLoader(app, passport);
 
