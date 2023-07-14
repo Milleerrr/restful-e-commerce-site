@@ -29,7 +29,7 @@ module.exports = class AuthService {
   async login(data) {
 
     const { email, password } = data;
-
+    
     try {
       // Check if user exists
       const user = await UserModelInstance.findOneByEmail(email);

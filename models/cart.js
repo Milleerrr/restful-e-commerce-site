@@ -49,7 +49,7 @@ module.exports = class CartModel {
       // Generate SQL statement
       const statement = `SELECT *
                          FROM carts
-                         WHERE "userId" = $1`;
+                         WHERE "user_id" = $1`;
       const values = [userId];
   
       // Execute SQL statment

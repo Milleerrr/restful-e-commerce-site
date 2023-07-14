@@ -1,5 +1,4 @@
 const db = require('../db');
-const pgp = require('pg-promise')({ capSQL: true });
 
 module.exports = class UserModel {
 
@@ -8,53 +7,53 @@ module.exports = class UserModel {
    * @param  {Object}      data [User data]
    * @return {Object|null}      [Created user record]
    */
-  async create(data) {
-    try {
+  // async create(data) {
+  //   try {
 
-      // Generate SQL statement - using helper for dynamic parameter injection
-      const statement = pgp.helpers.insert(data, null, 'users') + 'RETURNING *';
+  //     // Generate SQL statement - using helper for dynamic parameter injection
+  //     const statement = pgp.helpers.insert(data, null, 'users') + 'RETURNING *';
   
-      // Execute SQL statment
-      const result = await db.query(statement);
+  //     // Execute SQL statment
+  //     const result = await db.query(statement);
 
-      if (result.rows?.length) {
-        return result.rows[0];
-      }
+  //     if (result.rows?.length) {
+  //       return result.rows[0];
+  //     }
 
-      return null;
+  //     return null;
 
-    } catch(err) {
-      throw new Error(err);
-    }
-  }
+  //   } catch(err) {
+  //     throw new Error(err);
+  //   }
+  // }
 
-  /**
-   * Updates a user record
-   * @param  {Object}      data [User data]
-   * @return {Object|null}      [Updated user record]
-   */
-  async update(data) {
-    try {
+  // /**
+  //  * Updates a user record
+  //  * @param  {Object}      data [User data]
+  //  * @return {Object|null}      [Updated user record]
+  //  */
+  // async update(data) {
+  //   try {
 
-      const { id, ...params } = data;
+  //     const { id, ...params } = data;
 
-      // Generate SQL statement - using helper for dynamic parameter injection
-      const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
-      const statement = pgp.helpers.update(params, null, 'users') + condition;
+  //     // Generate SQL statement - using helper for dynamic parameter injection
+  //     const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
+  //     const statement = pgp.helpers.update(params, null, 'users') + condition;
   
-      // Execute SQL statment
-      const result = await db.query(statement);
+  //     // Execute SQL statment
+  //     const result = await db.query(statement);
 
-      if (result.rows?.length) {
-        return result.rows[0];
-      }
+  //     if (result.rows?.length) {
+  //       return result.rows[0];
+  //     }
 
-      return null;
+  //     return null;
 
-    } catch(err) {
-      throw new Error(err);
-    }
-  }
+  //   } catch(err) {
+  //     throw new Error(err);
+  //   }
+  // }
 
   /**
    * Finds a user record by email

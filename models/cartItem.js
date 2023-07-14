@@ -12,7 +12,7 @@ module.exports = class CartItemModel {
     try {
 
       // Generate SQL statement - using helper for dynamic parameter injection
-      const statement = pgp.helpers.insert(data, null, 'cartItems') + 'RETURNING *';
+      const statement = pgp.helpers.insert(data, null, 'cartitems') + 'RETURNING *';
  
       // Execute SQL statment
       const result = await db.query(statement);
@@ -39,7 +39,7 @@ module.exports = class CartItemModel {
 
       // Generate SQL statement - using helper for dynamic parameter injection
       const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
-      const statement = pgp.helpers.update(data, null, 'cartItems') + condition;
+      const statement = pgp.helpers.update(data, null, 'cartitems') + condition;
   
       // Execute SQL statment
       const result = await db.query(statement);
@@ -68,9 +68,9 @@ module.exports = class CartItemModel {
                             ci.qty,
                             ci.id AS "cartItemId", 
                             p.*
-                         FROM "cartItems" ci
-                         INNER JOIN products p ON p.id = ci."productId"
-                         WHERE "cartId" = $1`
+                         FROM "cartitems" ci
+                         INNER JOIN products p ON p.id = ci."product_id"
+                         WHERE "cart_id" = $1`
       const values = [cartId];
   
       // Execute SQL statment
@@ -97,7 +97,7 @@ module.exports = class CartItemModel {
 
       // Generate SQL statement
       const statement = `DELETE
-                         FROM "cartItems"
+                         FROM "cartitems"
                          WHERE id = $1
                          RETURNING *`;
       const values = [id];

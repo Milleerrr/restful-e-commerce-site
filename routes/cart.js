@@ -34,6 +34,7 @@ module.exports = (app, passport) => {
 
   router.post('/mine', async (req, res, next) => {
     try {
+      console.log(req);
       const { id } = req.user;
     
       const response = await CartServiceInstance.create({ userId: id });
